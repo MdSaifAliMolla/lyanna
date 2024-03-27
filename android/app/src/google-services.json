@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "670053862489",
+    "project_id": "lyanna-bd625",
+    "storage_bucket": "lyanna-bd625.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670053862489:android:b7562228fd63c3a9e23548",
+        "android_client_info": {
+          "package_name": "com.example.lyanna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670053862489-n0mvnd36ohkda6nrib08bo75p0ml363r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lyanna",
+            "certificate_hash": "1a4af2b233b2032e07c76719f80f372d58c379ce"
+          }
+        },
+        {
+          "client_id": "670053862489-t5p0rqf9lkh3otss2tl820r55f9quccs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5prYy93zzFfRlDd7p5LkHthVLYxAoz2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670053862489-t5p0rqf9lkh3otss2tl820r55f9quccs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
