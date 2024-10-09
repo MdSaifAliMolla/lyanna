@@ -1,4 +1,4 @@
-# lyanna - A e-commerce app
+# lyanna - An e-commerce app
 
 lyanna is an e-commerce app with a awesome ui and tons of features
 
