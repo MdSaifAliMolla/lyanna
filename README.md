@@ -1,6 +1,7 @@
-# lyanna
+# lyanna - A e-commerce app
 
-A new Flutter project.
+lyanna is an e-commerce app with a awesome ui and tons of features
+
 
 ## Getting Started
 
