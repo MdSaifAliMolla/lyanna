@@ -48,7 +48,7 @@ class _AddProductPageState extends State<AddProductPage> {
       };
       await DatabaseMethods().addProduct(addProduct, value!).then((value) =>
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Product has been added "))
+          const SnackBar(content: Text("Product has been added "))
         )
       );
     }
@@ -73,7 +73,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       width: 150,
                       height: 150,
                       decoration: BoxDecoration(border: Border.all(color: Colors.black,width: 1.5)),
-                      child:Icon(Icons.camera_alt_outlined) ,
+                      child:const Icon(Icons.camera_alt_outlined) ,
                     ),
                   ):Container(
                     width: 150,
@@ -95,21 +95,21 @@ class _AddProductPageState extends State<AddProductPage> {
               const SizedBox(height: 10,),
 
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 223, 223, 223),
+                  color: const Color.fromARGB(255, 223, 223, 223),
                   borderRadius: BorderRadius.circular(15)
                 ),
                 child: DropdownButton<String>(
-                  items:items.map((item) =>DropdownMenuItem<String>(child:Text(item),value: item,)).toList(),
+                  items:items.map((item) =>DropdownMenuItem<String>(value: item,child:Text(item),)).toList(),
 
                 onChanged:(value){setState(() {
                   this.value=value;
                   });
                 },
                 value:value,
-                hint: Text('Select Category'),
-                icon:Icon(Icons.arrow_drop_down),
+                hint: const Text('Select Category'),
+                icon:const Icon(Icons.arrow_drop_down),
                 ),
               ),
               const SizedBox(height: 20,),

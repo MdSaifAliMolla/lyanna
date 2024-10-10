@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lyanna/admin/admin_home.dart';
+import 'package:lyanna/components/bottomNavBar.dart';
 import 'package:lyanna/components/carousel_slider.dart';
+import 'package:lyanna/pages/about.dart';
+import 'package:lyanna/pages/contact.dart';
 import 'package:lyanna/pages/details.dart';
 import 'package:lyanna/service/database.dart';
 import 'package:lyanna/components/side_drawer.dart';
@@ -37,13 +40,13 @@ class _HomeState extends State<Home> {
       return snapshot.hasData?GridView.builder(
         gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.75,
+          crossAxisSpacing: 14,
+          mainAxisSpacing: 14,
+          childAspectRatio: 0.70,
         ),
         padding: EdgeInsets.zero,
         itemCount: snapshot.data.docs.length,
-        shrinkWrap:false,
+        shrinkWrap:true,
 
         itemBuilder: (context, index) {
           DocumentSnapshot ds = snapshot.data.docs[index];
@@ -53,31 +56,37 @@ class _HomeState extends State<Home> {
                     image: ds['Image'],
                     price: ds['Price'],
                     ))),
-                    child: Material(
-                      elevation: 6,
-                      borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.grey[100],
+                        boxShadow: [BoxShadow(
+                          color: Colors.grey.shade200,
+                          blurRadius: 15
+                        )]
+                      ),
                       child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color:secondaryColor,
-                        ),
                         padding: const EdgeInsets.all(8),
                         child: Column(
                           children: [
-                            Image.network(ds['Image'],height: 150,width: 150,fit: BoxFit.cover,),
+                            Image.network(ds['Image'],
+                            height: 150,width: 150,fit: BoxFit.cover,),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
+                                  const SizedBox(height:13),
                                   Text(ds['Name'],style: AppWidget.boldTextStyle(),),
+                                  const SizedBox(height: 6),
                                   Text('Rs.'+ds['Price'],style: AppWidget.LightTextStyle(),),
                                 ],
                               ),
-                              /*GestureDetector(
-                                child: Icon(Icons.heart_broken_outlined),
+                              GestureDetector(
+                                child: const Icon(Icons.shopping_bag),
                                 onTap: (){},
-                              ) */
+                              ) 
                              ],
                             )
                             
@@ -95,67 +104,63 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Image.asset('assets/images/Lyanna.png',height:90,width:170,fit:BoxFit.fill,),
+        backgroundColor: Colors.transparent,
+        title: Text("Lyanna",style: AppWidget.SpecialTextStyle(),),
       ),
       drawer: Drawer(
-        shadowColor:secondaryColor,
+        backgroundColor:Colors.grey[900],
         child: ListView(
           children: [
             Container(
               height: MediaQuery.sizeOf(context).height/5,
-              decoration:BoxDecoration(
-                image: const DecorationImage(image:AssetImage('assets/images/Lyanna.png'),fit: BoxFit.fill,),
-                borderRadius: BorderRadius.vertical(
-                  bottom:Radius.elliptical(MediaQuery.sizeOf(context).width,110)
-                )
-              )
+              child: const Center(
+                child: Text('Lyanna',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize:47,fontWeight: FontWeight.w900 ,
+                  fontFamily: 'DMSerif'
+                ),),
+              ),
             ),
-            drawerItem(name:'I am Seller', icon:Icons.settings,destination: const AdminHome(),),
+            const drawerItem(name:'I am Seller', icon:Icons.settings,destination: AdminHome(),),
             const SizedBox(height: 15,),
 
-            drawerItem(name: 'About', icon:Icons.newspaper),
+            const drawerItem(name: 'About', icon:Icons.newspaper,destination: about(),),
             const SizedBox(height: 15,),
 
-            drawerItem(name:"Contact Us", icon:Icons.mail_outline_rounded)
+            const drawerItem(name:"Contact Us", icon:Icons.mail_outline_rounded,destination: Contact(),)
             
           ],
         ),
       ),
 
       body:
-        // margin: EdgeInsets.only(top: 10,left: 20,right: 10,bottom: 0),
-         
-           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10,),
-              
-              // Text(
-              //   "Discover",
-              //   style:AppWidget.LightTextStyle(),
-              // ),
-              
-              showItem(),
-              
-              const SizedBox(height: 20,),
-             CarouselImage(),
-              const SizedBox(height: 20,),
-              Text(
-                  "Premium collection",
-                    style:AppWidget.HeadTextStyle(),
-                  ),
+           Padding(
+             padding: const EdgeInsets.all(4.0),
+             child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  showItem(),
                   const SizedBox(height: 20,),
-              
-              Container(
-                height: 270,
-                child: allItems()
-              ),
-              const SizedBox(height: 20,),
-            ],
-          ),
-        
-      
+                  Padding(
+                    padding: const EdgeInsets.only(left:12.0),
+                    child: Text(
+                        "Premium collection 🔥",
+                          style:AppWidget.HeadTextStyle(),
+                        ),
+                  ),
+                      const SizedBox(height: 12,),
+                  
+                  allItems(),
+                  const SizedBox(height: 20,),
+                ],
+                         ),
+             ),
+           ),
     );
   }
 
@@ -175,21 +180,18 @@ class _HomeState extends State<Home> {
                 ItemStream = await DatabaseMethods().getItem('a');
                 setState(() {});
               },
-              child: Material(
-                elevation: 5,
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 30,
-                  width: 40,
-                  decoration: BoxDecoration(color:a?Colors.black:const Color.fromRGBO(78, 117, 202, 0.377),
-                  borderRadius: BorderRadius.circular(5)
-                  ),
-                    child:Text('a',style: TextStyle(
-                      color: a?Colors.white:Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold
-                    ),)
+              child: Container(
+                alignment: Alignment.center,
+                height: 30,
+                width: 45,
+                decoration: neu().copyWith(color:a?Colors.grey[500]:Colors.grey[300],
+                borderRadius: BorderRadius.circular(5),
                 ),
+                  child:Text('a',style: TextStyle(
+                    color:Colors.grey[900],
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold
+                  ),)
               ),
             ),
             GestureDetector(
@@ -206,11 +208,11 @@ class _HomeState extends State<Home> {
                   alignment: Alignment.center,
                     height: 30,
                     width: 40,
-                    decoration: BoxDecoration(color:b?Colors.black:const Color.fromRGBO(78, 117, 202, 0.377),
+                    decoration: neu().copyWith(color:b?Colors.grey[500]:Colors.grey[300],
                     borderRadius: BorderRadius.circular(5),
                     ),
                     child:Text('b',style: TextStyle(
-                      color: b?Colors.white:Colors.black,
+                      color: Colors.grey[900],
                       fontSize: 18,
                       fontWeight: FontWeight.bold
                     ),)

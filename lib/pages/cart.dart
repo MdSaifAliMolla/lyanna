@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:lyanna/pages/address.dart';
 import 'package:lyanna/pages/details.dart';
-import 'package:lyanna/pages/payment.dart';
 import 'package:lyanna/style.dart';
 
 //import 'details.dart';
@@ -9,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lyanna/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pay/pay.dart';
 
 
 class CartPage extends StatefulWidget {
@@ -26,12 +24,11 @@ class _CartPageState extends State<CartPage> {
   //List<PaymentItem>paymentItems=[];
 
   void startTimer(){
-    Timer(Duration(seconds:1), () {
+    Timer(const Duration(seconds:1), () {
     setState(() {
           
         });
      });
-    ;
   }
    
    onthload()async{
@@ -62,35 +59,37 @@ class _CartPageState extends State<CartPage> {
 
           DocumentSnapshot ds = snapshot.data.docs[index];
           total=total+int.parse(ds['Price']);
-          //paymentItems.add(PaymentItem(amount:ds['Price'],label:ds['Name'],status:PaymentItemStatus.final_price));
-          
           return GestureDetector(
             onTap: () =>Navigator.push(context,MaterialPageRoute(
               builder:(context)=>Details(description:ds['Description'], image:ds['Image'], price:ds['Price'], name:ds['Name'])
             )),
             child: Container(
-                margin: EdgeInsets.only(top: 10,left: 10,right: 10),
-                padding: EdgeInsets.all(15),
+                margin: const EdgeInsets.only(top: 10,left: 10,right: 10),
+                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
-                  color: secondaryColor,
-                  borderRadius: BorderRadius.circular(18),
+                  color: const Color.fromARGB(137, 240, 239, 239),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [BoxShadow(
+                    color: Colors.grey.shade200,
+                    blurRadius: 7,
+                    spreadRadius: 1
+                  )],
                 ),
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal:10),
+                      padding: const EdgeInsets.symmetric(horizontal:5),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             height: 100,
-                            width: 100,
+                            width: 120,
                             child:ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(6),
                               child: Image.network(ds['Image'],
                               height:100,width: 100,
                               fit: BoxFit.cover,
-                              
                               ),) ,
                           ),
                           const SizedBox(width: 30,),
@@ -107,10 +106,9 @@ class _CartPageState extends State<CartPage> {
                           const Spacer(),
                           GestureDetector(
                             onTap: (){
-                             // total=total-int.parse(ds['Price']) ;
                               FirebaseFirestore.instance.collection("users").doc(id).collection('Cart').doc(ds.id).delete();
                             },
-                            child: Icon(Icons.delete)
+                            child: const Icon(Icons.delete)
                           )
                         ],
                       ),
@@ -132,7 +130,10 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Center(child: Text('Cart',style: AppWidget.HeadTextStyle().copyWith(fontSize: 28))),),
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Center(child: Text('Cart',style: AppWidget.HeadTextStyle().copyWith(fontSize: 28))),),
       body: Column(
         children: [
           Container(
@@ -141,38 +142,38 @@ class _CartPageState extends State<CartPage> {
           const Spacer(),
           const Divider(),
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 7),
             child: Row(
               children: [
-                Text('Total Price',style: AppWidget.SpecialTextStyle().copyWith(fontSize: 28),),
-                Spacer(),
-                Text('Rs. '+total.toString(),style: AppWidget.SpecialTextStyle(),)
+                Text('Total Price',style: AppWidget.SpecialTextStyle().copyWith(fontSize: 25),),
+                const Spacer(),
+                Text('Rs. $total',style: AppWidget.SpecialTextStyle(),)
               ],
               ),
           ),
-           SizedBox(height: 15,),
+           const SizedBox(height:7),
             
           GestureDetector(
             onTap: () {
               Navigator.push(context,MaterialPageRoute(
-              builder:(context)=>AddressPage(
-               // paymentItems:paymentItems,
+              builder:(context)=>const AddressPage(
               )));
             },
             child: Container(
-              margin: EdgeInsets.only(bottom: 20,left: 15,right: 15),
+              margin: const EdgeInsets.only(bottom: 20,left: 15,right: 15),
               height: 53,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(15)
+                color: Colors.grey[900],
+                borderRadius: BorderRadius.circular(8)
               ),
               child:const Center(child: Text(
                 'Order',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                  color: Colors.white,
+                  fontSize: 25,
+                  fontFamily: 'DMSerif',
+                  color: Colors.white70,
                 ),),),
           
             ),

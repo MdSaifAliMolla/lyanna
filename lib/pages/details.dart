@@ -22,9 +22,10 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(backgroundColor: Colors.transparent,),
       body: Container(
-        margin: EdgeInsets.only(top: 20,left: 20,right: 20),
+        margin: const EdgeInsets.only(top: 20,left: 20,right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,60 +35,28 @@ class _DetailsState extends State<Details> {
               const SizedBox(height: 30,),
 
               Text(widget.name,style: AppWidget.HeadTextStyle(),),
-            /*Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                
-                Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    if (a>1) {
-                      --a;
-                    }
-                    setState(() {});
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(8)),
-                    child: Icon(Icons.remove,color: Colors.white,),
-                  ),
-                ),
-                SizedBox(width: 20,),
-                Text(a.toString()),
-                SizedBox(width: 20,),
-                GestureDetector(
-                  onTap: () {
-                    ++a;
-                    setState(() {},);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.black,borderRadius: BorderRadius.circular(8)),
-                    child: Icon(Icons.add,color: Colors.white,),
-                  ),
-                ),
-              ],
-            ),*/
             const SizedBox(height: 10,),
             Container(
               height: 150,
               alignment: Alignment.topLeft,
               child: Text(widget.description,style: AppWidget.LightTextStyle(),)),
             const Spacer(),
-            Divider(),
+            const Divider(),
             const SizedBox(height: 15,),
             Container(
-              margin: EdgeInsets.only(bottom: 27),
+              margin: const EdgeInsets.only(bottom: 27),
               child: Row(
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Price',style: AppWidget.LightTextStyle().copyWith(fontSize: 26),),
-                      Text('Rs. '+ widget.price,style: AppWidget.HeadTextStyle(),),
+                      Text('Rs. ${widget.price}',style: AppWidget.HeadTextStyle(),),
                     ],),
                     const Spacer(),
                     Container(
-                      decoration: BoxDecoration(color: Colors.black,
-                      borderRadius: BorderRadius.circular(15)),
+                      decoration: BoxDecoration(color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(12)),
                       child:
                         Container(
                             padding:const EdgeInsets.symmetric(vertical: 15,horizontal: 20),
@@ -95,7 +64,6 @@ class _DetailsState extends State<Details> {
                             width:MediaQuery.of(context).size.width/2.1 ,
                             child: GestureDetector(
                               onTap: ()async {
-                               // if (ordered=false) {
                                   Map<String,dynamic>addToCart={
                                   'Name':widget.name,
                                   'Price':widget.price,
@@ -106,21 +74,14 @@ class _DetailsState extends State<Details> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                  const SnackBar(content: Text('Item addaed to cart!'))
                                 );
-                              /* }else{
-                                 ScaffoldMessenger.of(context).showSnackBar(
-                                 const SnackBar(content: Text('Item alreddy addaed to cart!'))
-                                );
-                               }
-                                ordered=true;*/
-                                
                               },
                               child:const Row(
                                 children: [
-                                  Text('add to cart',style:TextStyle(color: Colors.white,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 25),),
+                                  Text('add to cart',style:TextStyle(color: Colors.white70,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 24),),
                                   Spacer(),
-                                  Icon(Icons.shopping_cart,color: Colors.white,)
+                                  Icon(Icons.shopping_cart,color: Colors.white70,)
                                 ],
                               ),
                             ),

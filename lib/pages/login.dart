@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
         children:[ Container(
           height: MediaQuery.sizeOf(context).height,
           width:MediaQuery.sizeOf(context).width,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(image:AssetImage('assets/images/demo4.jpg'),fit: BoxFit.cover,opacity: 0.7)
           ),),
           /*Center(
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                 margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height/1.4),
                 height:70,
                 width:MediaQuery.sizeOf(context).width/1.2,
-                padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
+                padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15)
@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
                       height: 50,width: 50,
                       fit: BoxFit.cover,
                     ),
-                    SizedBox(width: 10,),
+                    const SizedBox(width: 10,),
                     Text(
                       'Login with Google',
                       style: AppWidget.HeadTextStyle().copyWith(fontSize: 28,)

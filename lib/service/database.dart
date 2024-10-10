@@ -13,7 +13,7 @@ class DatabaseMethods {
   }*/
 
   Future<Stream<QuerySnapshot>>getItem(String name)async{
-    return await FirebaseFirestore.instance.collection(name).snapshots();
+    return FirebaseFirestore.instance.collection(name).snapshots();
   }
 
   Future addToCart(Map<String,dynamic>userInfoMap,String id)async{
@@ -35,11 +35,11 @@ class DatabaseMethods {
   }
 
   Future<Stream<QuerySnapshot>>getCart(String id)async{
-    return await FirebaseFirestore.instance.collection("users").doc(id).collection('Cart').snapshots();
+    return FirebaseFirestore.instance.collection("users").doc(id).collection('Cart').snapshots();
   }
 
   Future<Stream<QuerySnapshot>>getWishList(String id)async{
-    return await FirebaseFirestore.instance.collection("users").doc(id).collection('Wishlist').snapshots();
+    return FirebaseFirestore.instance.collection("users").doc(id).collection('Wishlist').snapshots();
   }
 
 

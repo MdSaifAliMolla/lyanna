@@ -1,7 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:lyanna/admin/admin_home.dart';
+import 'package:lyanna/components/side_drawer.dart';
 import 'package:lyanna/pages/cart.dart';
-import 'package:lyanna/pages/payment.dart';
+import 'package:lyanna/pages/wallet.dart';
 import 'package:lyanna/pages/profile.dart';
 
 import '../pages/home.dart';
@@ -21,14 +23,12 @@ class _BottomNavState extends State<BottomNav> {
   late Home homepage;
   late CartPage order;
   late Profile profile;
-  //late Payment payment;
 
   @override
   void initState() {
-    homepage=Home();
-    profile=Profile();
-    order=CartPage();
-    //payment=Payment();
+    homepage=const Home();
+    profile=const Profile();
+    order=const CartPage();
     pages=[homepage,order,profile];
     super.initState();
   }
@@ -36,20 +36,20 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade300,
       bottomNavigationBar: CurvedNavigationBar(
         height: 65,
-        backgroundColor: Colors.white,
-        color: Colors.black,
-        animationDuration: Duration(microseconds: 500),
+        backgroundColor: Colors.grey.shade300,
+        color: Colors.grey.shade900,
+        animationDuration: const Duration(microseconds: 500),
         onTap: (int index){
           setState(() {
             currentTabIndex = index;
           });
         },
-        items:[
-          Icon(Icons.home_outlined,color: Colors.white,),
+        items:const [
+          Icon(Icons.home,color: Colors.white,),
           Icon(Icons.shopping_cart,color: Colors.white,),
-          //Icon(Icons.wallet_outlined,color: Colors.white,),
           Icon(Icons.person,color: Colors.white,)
         ] 
       ),

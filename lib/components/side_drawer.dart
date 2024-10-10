@@ -6,13 +6,14 @@ class drawerItem extends StatelessWidget {
   final icon;
   final destination;
 
-  drawerItem({super.key,required this.name,required this.icon, this.destination});
+  const drawerItem({super.key,required this.name,required this.icon, this.destination});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title:Text(name,style: AppWidget.LightTextStyle(),),
-      leading:Icon(icon),
+      contentPadding: EdgeInsets.only(left:20),
+      title:Text(name,style: AppWidget.LightTextStyle().copyWith(color: Colors.white),),
+      leading:Icon(icon,color: Colors.white,),
       onTap: () {
         Navigator.push(context,MaterialPageRoute(builder: (context)=>destination)
         );

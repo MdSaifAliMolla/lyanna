@@ -1,17 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lyanna/payment_configurations.dart';
 import 'package:lyanna/components/custom_textfield.dart';
 import 'package:lyanna/service/database.dart';
-import 'package:lyanna/style.dart';
-import 'package:lyanna/pages/cart.dart';
 import 'package:pay/pay.dart';
 
 class AddressPage extends StatefulWidget {
   //List<PaymentItem> paymentItems;
 
-  AddressPage({super.key,/*required this.paymentItems*/});
+  const AddressPage({super.key,/*required this.paymentItems*/});
 
   @override
   State<AddressPage> createState() => _AddressPageState();
@@ -28,7 +25,7 @@ class _AddressPageState extends State<AddressPage> {
   final TextEditingController distController=TextEditingController();
   final TextEditingController stateController=TextEditingController();
   List<PaymentItem>paymentItems=[
-    PaymentItem(amount:'100',status: PaymentItemStatus.final_price,label: 'saif')
+    const PaymentItem(amount:'100',status: PaymentItemStatus.final_price,label: 'saif')
   ];
 
   @override

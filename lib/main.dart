@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 235, 233, 239)),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 235, 233, 239)),
         useMaterial3: true,
       ),
       home:StreamBuilder<User?>(
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           }
           return const Center(child: CircularProgressIndicator());
         }),
-      
+      //home:const BottomAppBar(),
     );
   }
 }

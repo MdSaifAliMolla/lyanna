@@ -7,7 +7,7 @@ class AuthMethods {
     await FirebaseAuth.instance.signOut();
   }
   Future deleteUser()async{
-    User? user= await FirebaseAuth.instance.currentUser;
+    User? user= FirebaseAuth.instance.currentUser;
     user?.delete();
   }
 }

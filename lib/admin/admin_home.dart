@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lyanna/admin/add_product.dart';
 import 'package:lyanna/service/database.dart';
 import 'package:lyanna/style.dart';
-import 'package:lyanna/service/database.dart';
 
 class AdminHome extends StatefulWidget {
   const AdminHome({super.key});
@@ -44,16 +43,16 @@ class _AdminLoginState extends State<AdminHome> {
           DocumentSnapshot ds = snapshot.data.docs[index];
           return Material(
             elevation: 6,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color:secondaryColor,
               ),
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 children: [
-                  Image.network(ds['Image'],height: 150,width: 150,fit: BoxFit.cover,),
+                  Image.network(ds['Image'],height: 130,width: 130,fit: BoxFit.cover,),
                   Text(ds['Name'],style: AppWidget.boldTextStyle(),),
                   /*Text(ds['Description'],style: AppWidget.LightTextStyle(),),*/
                   Text('Rs.'+ds['Price'],style: AppWidget.LightTextStyle(),),
@@ -61,21 +60,21 @@ class _AdminLoginState extends State<AdminHome> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GestureDetector(
-                        child: Icon(Icons.delete),
+                        child: const Icon(Icons.delete),
                         onTap:(){
-                          var value;
+                          bool value;
                           if (a=true) {
                             value=a;
                           }
                           if (b=true) {
                             value=b;
                           }
-                          FirebaseFirestore.instance.collection(value).doc(ds.id).delete();
+                          //FirebaseFirestore.instance.collection(value).doc(ds.id).delete();
                         }
                       ),
                       const Spacer(),
                       GestureDetector(
-                        child: Icon(Icons.edit),
+                        child: const Icon(Icons.edit),
                         onTap:(){
                           
                         }
@@ -109,7 +108,7 @@ class _AdminLoginState extends State<AdminHome> {
                   alignment: Alignment.center,
                   height: 30,
                   width: 40,
-                  decoration: BoxDecoration(color:a?Colors.black:Color.fromRGBO(78, 117, 202, 0.377),
+                  decoration: BoxDecoration(color:a?Colors.black:const Color.fromRGBO(78, 117, 202, 0.377),
                   borderRadius: BorderRadius.circular(5)
                   ),
                     child:Text('a',style: TextStyle(
@@ -134,7 +133,7 @@ class _AdminLoginState extends State<AdminHome> {
                   alignment: Alignment.center,
                     height: 30,
                     width: 40,
-                    decoration: BoxDecoration(color:b?Colors.black:Color.fromRGBO(78, 117, 202, 0.377),
+                    decoration: BoxDecoration(color:b?Colors.black:const Color.fromRGBO(78, 117, 202, 0.377),
                     borderRadius: BorderRadius.circular(5),
                     ),
                     child:Text('b',style: TextStyle(
@@ -176,8 +175,8 @@ class _AdminLoginState extends State<AdminHome> {
         onPressed:(){
           Navigator.push(context, MaterialPageRoute(builder: (context)=>const AddProductPage()));
         },
-        child: Icon(Icons.add),
         tooltip:"Add a Product",
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
