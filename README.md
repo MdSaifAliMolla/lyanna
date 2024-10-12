@@ -1,6 +1,6 @@
 # lyanna - An e-commerce app
 
-lyanna is an e-commerce app with a awesome ui and tons of features
+lyanna is an e-commerce app with  awesome ui and tons of features
 
 
 ## Getting Started
