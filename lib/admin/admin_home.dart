@@ -52,35 +52,18 @@ class _AdminLoginState extends State<AdminHome> {
               padding: const EdgeInsets.all(5),
               child: Column(
                 children: [
-                  Image.network(ds['Image'],height: 130,width: 130,fit: BoxFit.cover,),
-                  Text(ds['Name'],style: AppWidget.boldTextStyle(),),
-                  /*Text(ds['Description'],style: AppWidget.LightTextStyle(),),*/
-                  Text('Rs.'+ds['Price'],style: AppWidget.LightTextStyle(),),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
+                  Image.network(ds['Image'],height: 130,width: 130,fit: BoxFit.fitHeight,),
+                  Text(ds['Name'],style: AppWidget.boldTextStyle().copyWith(overflow: TextOverflow.ellipsis),),
+                  //Text(ds['Description'],style: AppWidget.LightTextStyle(),),
+                  Text('Rs.'+ ds['Price'],style: AppWidget.LightTextStyle(),),
+                  const Spacer(),
                       GestureDetector(
                         child: const Icon(Icons.delete),
                         onTap:(){
-                          bool value;
-                          if (a=true) {
-                            value=a;
-                          }
-                          if (b=true) {
-                            value=b;
-                          }
-                          //FirebaseFirestore.instance.collection(value).doc(ds.id).delete();
+                          FirebaseFirestore.instance.collection(a?'a':'b').doc(ds.id).delete();
+                          setState(() {});
                         }
                       ),
-                      const Spacer(),
-                      GestureDetector(
-                        child: const Icon(Icons.edit),
-                        onTap:(){
-                          
-                        }
-                      ),
-                    ],
-                  )
                 ],
               ),
             ),
@@ -111,7 +94,7 @@ class _AdminLoginState extends State<AdminHome> {
                   decoration: BoxDecoration(color:a?Colors.black:const Color.fromRGBO(78, 117, 202, 0.377),
                   borderRadius: BorderRadius.circular(5)
                   ),
-                    child:Text('a',style: TextStyle(
+                    child:Text('Women',style: TextStyle(
                       color: a?Colors.white:Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.bold
@@ -136,7 +119,7 @@ class _AdminLoginState extends State<AdminHome> {
                     decoration: BoxDecoration(color:b?Colors.black:const Color.fromRGBO(78, 117, 202, 0.377),
                     borderRadius: BorderRadius.circular(5),
                     ),
-                    child:Text('b',style: TextStyle(
+                    child:Text('Men',style: TextStyle(
                       color: b?Colors.white:Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.bold

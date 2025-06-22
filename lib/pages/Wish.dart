@@ -1,34 +1,23 @@
 import 'dart:async';
-import 'package:lyanna/pages/address.dart';
 import 'package:lyanna/pages/details.dart';
-import 'package:lyanna/payment_configurations.dart';
 import 'package:lyanna/style.dart';
-import 'package:pay/pay.dart';
-//import 'details.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lyanna/service/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+class WishlistPage extends StatefulWidget {
+  const WishlistPage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
+  State<WishlistPage> createState() => _WishlistPageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _WishlistPageState extends State<WishlistPage> {
   String id = FirebaseAuth.instance.currentUser!.uid;
   Stream? ItemStream;
   int total=0;
-  List<PaymentItem>_paymentItems=[];
-
-  void startTimer(){
-    Timer(const Duration(seconds:1), () {
-    setState(() {});
-     });
-  }
    
    onthload()async{
     ItemStream = await DatabaseMethods().getCart(id);
@@ -38,13 +27,40 @@ class _CartPageState extends State<CartPage> {
   }
   @override
   void initState() {
-    onthload();
-    startTimer();
+    loadWishlist();
     super.initState();
   }
 
-  Widget Cart(){
+  loadWishlist() async {
+    ItemStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .collection('Wishlist')
+        .snapshots();
+    setState(() {});
+  }
+
+  Future<void> removeFromWishlist(String itemName) async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(id)
+        .collection('Wishlist')
+        .where('Name', isEqualTo: itemName)
+        .get();
+
+    for (var doc in snapshot.docs) {
+      await doc.reference.delete();
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('$itemName removed from Wishlist!')),
+    );
+  }
+
+
+  Widget Wish(){
     return StreamBuilder(stream:ItemStream , builder: (context,AsyncSnapshot snapshot){
+
       return snapshot.hasData?ListView.builder(
         padding: EdgeInsets.zero,
         itemCount: snapshot.data.docs.length,
@@ -52,7 +68,7 @@ class _CartPageState extends State<CartPage> {
         scrollDirection: Axis.vertical,
 
         itemBuilder: (context, index) {
-          
+
           DocumentSnapshot ds = snapshot.data.docs[index];
           total=total+int.parse(ds['Price']);
           return GestureDetector(
@@ -107,7 +123,7 @@ class _CartPageState extends State<CartPage> {
                           
                           GestureDetector(
                             onTap: (){
-                              FirebaseFirestore.instance.collection("users").doc(id).collection('Cart').doc(ds.id).delete();
+                              removeFromWishlist(ds['Name']);
                             },
                             child: const Icon(Icons.delete)
                           )
@@ -124,56 +140,17 @@ class _CartPageState extends State<CartPage> {
     });
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Center(child: Text('Cart',style: AppWidget.HeadTextStyle().copyWith(fontSize: 28))),),
-      body: Column(
-        children: [
-          Expanded(child: SingleChildScrollView(child: Cart())),
-          const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 7),
-            child: Row(
-              children: [
-                Text('Total Price',style: AppWidget.SpecialTextStyle().copyWith(fontSize: 25),),
-                const Spacer(),
-                Text('Rs. $total',style: AppWidget.SpecialTextStyle(),)
-              ],
-              ),
-          ),
-           const SizedBox(height:7),
-          GestureDetector(
-            onTap: () {
-              // Navigator.push(context,MaterialPageRoute(
-              // builder:(context)=>const AddressPage(
-              // )));
-            },
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 20,left: 15,right: 15),
-              height: 53,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.grey[900],
-                borderRadius: BorderRadius.circular(8)
-              ),
-              child:const Center(child: Text(
-                'Order',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                  fontFamily: 'DMSerif',
-                  color: Colors.white70,
-                ),),),
-            ),
-          )
-        ],
-      ),
-            
-    );
+        title: Center(child: Text('Wishlist ',style: AppWidget.HeadTextStyle().copyWith(fontSize: 28))),),
+        body: Wish(),
+      );
     
   } 
 } 
+

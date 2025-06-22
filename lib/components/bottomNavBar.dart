@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lyanna/admin/admin_home.dart';
 import 'package:lyanna/components/side_drawer.dart';
 import 'package:lyanna/pages/cart.dart';
-import 'package:lyanna/pages/wallet.dart';
 import 'package:lyanna/pages/profile.dart';
 
 import '../pages/home.dart';

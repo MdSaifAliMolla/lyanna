@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
               mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            padding: EdgeInsets.only(top:65,bottom: 25),
+            padding: EdgeInsets.only(top:35,bottom: 25),
             color: const Color.fromARGB(255, 209, 206, 206),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,7 +34,8 @@ class _ProfileState extends State<Profile> {
                 Center(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.network(userData['profilePhoto'],height: 80,width: 80,fit: BoxFit.cover,),
+                    child: Icon(Icons.person,size: 80,),
+                    //child: Image.network(userData['profilePhoto'],height: 80,width: 80,fit: BoxFit.cover,),
                   ),
                 ),
               Column(

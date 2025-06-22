@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyanna/components/custom_textfield.dart';
 import 'package:lyanna/service/database.dart';
 import 'package:lyanna/style.dart';
-import 'package:random_string/random_string.dart';
+
 
 class AddProductPage extends StatefulWidget {
   const AddProductPage({super.key});
@@ -26,32 +25,57 @@ class _AddProductPageState extends State<AddProductPage> {
   final ImagePicker picker = ImagePicker();
   File?selectedImage;
 
-  Future getImage()async{
-    var image = await picker.pickImage(source: ImageSource.gallery);
-    selectedImage = File(image!.path);
+  Future<void> getImage() async {
+  final image = await picker.pickImage(source: ImageSource.gallery);
+  if (image != null) {
+    selectedImage = File(image.path);
     setState(() {});
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Picture added successfully"))
+      );
   }
+}
 
   upLoadProduct()async{
-    if (selectedImage!=null && productNameController.text!='' && priceController.text!='' ) {
-      String addId = randomAlphaNumeric(10);
+    if (selectedImage!=null && productNameController.text.isNotEmpty && priceController.text.isNotEmpty ) {
+      String addId = DateTime.now().toString();
       Reference firebaseStorageRef = FirebaseStorage.instance.ref().child('blogImage').child(addId);
       final UploadTask task = firebaseStorageRef.putFile(selectedImage!);
+      TaskSnapshot snapshot = await task;
+      String downloadURL = await snapshot.ref.getDownloadURL();
 
-      var downloadURL = await(await task).ref.getDownloadURL();
-      Map<String,dynamic>addProduct={
+      Map<String,dynamic>addproduct={
         "Image":downloadURL,
         "Name":productNameController.text,
         "Price":priceController.text,
         "Description":descriptionController.text,
         "Quantity":quantityController.text
       };
-      await DatabaseMethods().addProduct(addProduct, value!).then((value) =>
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Product has been added "))
-        )
+      try {
+      await DatabaseMethods().addProduct(addproduct, value!);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Product added successfully"))
+      );
+      // Clear form after success
+      productNameController.clear();
+      descriptionController.clear();
+      priceController.clear();
+      quantityController.clear();
+      setState(() => selectedImage = null);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error adding product: ${e.toString()}"))
       );
     }
+    }
+  }
+  @override
+  void dispose() {
+    productNameController.dispose();
+    descriptionController.dispose();
+    priceController.dispose();
+    quantityController.dispose();
+    super.dispose();
   }
 
   @override
